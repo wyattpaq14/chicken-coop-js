@@ -12,7 +12,7 @@ module.exports = {
       keepAlive: 120
     }
   },
-  tokenSecret: 'supersecrettoken69',,
+  tokenSecret: 'supersecrettoken69',
   PORT,
   SOCKETIO_PORT
 }
