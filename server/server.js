@@ -10,8 +10,8 @@ import bunyanExpressLogger from 'express-bunyan-logger'
 
 import mongoose from 'mongoose'
 
-// import global config
-import config from 'config'
+// import global config -- removed will impolment later
+// import config from 'config'
 
 // import routes
 import router from './routes/router'
@@ -23,11 +23,11 @@ const server = new Express()
 const app = http.createServer(server)
 
 // add config to every req via: req.locals.config
-server.locals.config = config
+// server.locals.config = config
 
 // setup server logging
 const serverLog = bunyan.createLogger({
-    name: config.serverName,
+    name: "chicken-coop-api",
     serializers: {
         err: bunyan.stdSerializers.err
     },
@@ -45,7 +45,7 @@ export default { serverLog }
 
 // setup access logging
 server.use(bunyanExpressLogger({
-    name: config.serverName,
+    name: "chicken-coop-api",
     streams: [{
         type: 'rotating-file',
         path: path.resolve(__dirname, 'logs/access.log'),
@@ -54,14 +54,24 @@ server.use(bunyanExpressLogger({
     }]
 }))
 
+
+// mongoose options -- move to config later
+
+const options = {
+    "autoReconnect": true,
+    "socketTimeoutMS": 30000,
+    "connectTimeoutMS": 30000,
+    "keepAlive": 120
+}
+const mongodbURI = "mongodb://localhost:27017/chicken-coop"
 // database setup
 const db = mongoose.connection
 server.use((req, res, next) => {
     if (db.readyState !== 1) {
-        db.openUri(config.mongodb.uri, config.mongodb.options)
+        db.openUri(mongodbURI, options)
         db.on('error', err => {
             serverLog.error({ msg: err.message }, 'MongoDB connection error')
-            throw new Error(`Unable to connect to database at ${config.mongodb.uri}. Error: ${err.message}`)
+            throw new Error(`Unable to connect to database at ${mongodbURI}. Error: ${err.message}`)
         })
     }
     next()
@@ -75,9 +85,10 @@ server.use(compression())
 
 server.use(router(router))
 
-
-app.listen(config.PORT, error => {
+// declare port object -- move to config later
+const port = 3000
+app.listen(port, error => {
     if (!error) {
-        serverLog.info(`Started JaC2 API Server in ${process.env.NODE_ENV} environment on port ${config.PORT}`)
+        serverLog.info(`Started Chicken Coop API Server in ${process.env.NODE_ENV} environment on port ${port}`)
     }
 })

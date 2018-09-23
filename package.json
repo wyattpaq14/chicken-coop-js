@@ -11,7 +11,7 @@
     "build:server": "cd server && yarn build",
     "server": "cd server && yarn start",
     "dev": "node client/.electron-vue/dev-runner.js",
-    "start": "cd server && nodemon server.js",
+    "start": "cd server && nodemon index.js",
     "start:prod": "NODE_ENV=production node index.js",
     "db": "mongod --dbpath ./data/db",
     "e2e": "npm run pack && mocha client/test/e2e",
@@ -33,6 +33,7 @@
     "deploy:eb": "aws elasticbeanstalk update-environment --environment-name jac2-backend-env --version-label $(git rev-parse HEAD|head -c 6)"
   },
   "dependencies": {
+    "@types/cors": "^2.8.4",
     "@types/node": "^10.10.3",
     "all": "^0.0.0",
     "axios": "^0.16.1",
