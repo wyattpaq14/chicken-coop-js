@@ -2,10 +2,10 @@ import Door from '../models/door'
 
 const createDoor = (req, res) => {
   if (req.body) {
-    let channel = new Channel(req.body)
-    Channel.addChannel(channel)
-      .then(newChannel => {
-        res.status(200).json({ status: 200, data: newChannel, message: 'Ok' })
+    let door = new Door(req.body)
+    Door.addDoor(door)
+      .then(newDoor => {
+        res.status(200).json({ status: 200, data: newDoor, message: 'Door added!' })
       }).catch(err => {
         res.status(500).json({ status: 500, message: err.message })
       })
@@ -13,9 +13,9 @@ const createDoor = (req, res) => {
 }
 
 const getDoors = (req, res) => {
-  Channel.getAllChannels()
-    .then(activeChannel => {
-      res.status(200).json({ status: 200, data: activeChannel, message: 'Ok' })
+  Door.getAllDoors()
+    .then(doors => {
+      res.status(200).json({ status: 200, data: doors, message: 'Retreived doors!' })
     }).catch(err => {
       res.status(500).json({ status: 500, message: err.message })
     })
@@ -24,47 +24,53 @@ const getDoors = (req, res) => {
 const getDoor = (req, res) => {
   if (req.body) {
     const { id } = req.params
-    Channel.getChannelById(id)
-      .then(newChannel => {
-        res.status(200).json({ status: 200, data: newChannel, message: 'Ok' })
+    Door.getDoorById(id)
+      .then(door => {
+        res.status(200).json({ status: 200, data: door, message: 'Retreived door!' })
       }).catch(err => {
         res.status(500).json({ status: 500, message: err.message })
       })
   } else throw new Error('unsuccessful. please check for valid input')
 }
 
-const openDoor = (req, res) => {
+const updateDoor = (req, res) => {
+  console.log('req body', req.body)
   if (req.body) {
-    const channel = {}
-    Object.keys(req.body).forEach(key => {
-      channel[key] = req.body[key]
-    })
-    const { id } = req.params
-    Channel.updateChannel(id, channel)
-      .then(newChannel => {
-        res.status(200).json({ status: 200, data: newChannel, message: 'Ok' })
-      }).catch(err => {
-        res.status(500).json({ status: 500, message: err.message })
-      })
-  } else throw new Error('unsuccessful. please check for valid input')
-}
+    const door = {}
 
-const closeDoor = (req, res) => {
-    if (req.body) {
-      const channel = {}
-      Object.keys(req.body).forEach(key => {
-        channel[key] = req.body[key]
-      })
-      const { id } = req.params
-      Channel.updateChannel(id, channel)
-        .then(newChannel => {
-          res.status(200).json({ status: 200, data: newChannel, message: 'Ok' })
+    // Retreive request data required for door operation
+    const { id } = req.body
+    const { action } = req.body
+
+    Object.keys(req.body).forEach(key => {
+      door[key] = req.body[key]
+    })
+    
+    if (action == 'open') {
+      door['isOpened'] = 1
+      Door.updateDoor(id, door)
+        .then(updatedDoor => {
+          res.status(200).json({ status: 200, data: updatedDoor, message: 'Opened door!' })
         }).catch(err => {
           res.status(500).json({ status: 500, message: err.message })
         })
-    } else throw new Error('unsuccessful. please check for valid input')
-  }
+
+    }
+    else if (action == 'close') {
+      door['isOpened'] = 0
+      Door.updateDoor(id, door)
+        .then(updatedDoor => {
+          res.status(200).json({ status: 200, data: updatedDoor, message: 'Closed door!' })
+        }).catch(err => {
+          res.status(500).json({ status: 500, message: err.message })
+        })
+    } else res.status(500).json({ status: 500, message: 'Door action is not defined!' })
+
+  } else throw new Error('Error, please check for valid input')
+}
+
+
 
 export default {
-  newChannel, returnAllChannels, returnSpecificChannel, updateSpecificChannel
+  createDoor, getDoor, getDoors, updateDoor
 }

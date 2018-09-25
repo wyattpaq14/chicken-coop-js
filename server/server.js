@@ -79,7 +79,7 @@ server.use((req, res, next) => {
 
 // Express setup
 server.use(cors())
-server.use(bodyParser.json())
+server.use(bodyParser.json({ type: 'application/json'}))
 server.use(bodyParser.urlencoded({ extended: true }))
 server.use(compression())
 
@@ -90,5 +90,6 @@ const port = 3000
 app.listen(port, error => {
     if (!error) {
         serverLog.info(`Started Chicken Coop API Server in ${process.env.NODE_ENV} environment on port ${port}`)
+        console.log(`Started Chicken Coop API Server in ${process.env.NODE_ENV} environment on port ${port}`)
     }
 })
