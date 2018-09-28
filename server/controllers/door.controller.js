@@ -6,10 +6,11 @@ const createDoor = (req, res) => {
     let door = new Door(req.body)
     Door.addDoor(door)
       .then(newDoor => {
-        serverLog()
+        server.logger.info('Door has been created.')
         res.status(200).json({ status: 200, data: newDoor, message: 'Door added!' })
       }).catch(err => {
         res.status(500).json({ status: 500, message: err.message })
+        server.logger.error(err.message)
       })
   } else throw new Error('unsuccessful. please check for valid input')
 }
@@ -17,9 +18,11 @@ const createDoor = (req, res) => {
 const getDoors = (req, res) => {
   Door.getAllDoors()
     .then(doors => {
+      server.logger.info('Doors has been retreived.')
       res.status(200).json({ status: 200, data: doors, message: 'Retreived doors!' })
     }).catch(err => {
       res.status(500).json({ status: 500, message: err.message })
+      server.logger.error(err.message)
     })
 }
 
@@ -28,6 +31,7 @@ const getDoor = (req, res) => {
     const { id } = req.params
     Door.getDoorById(id)
       .then(door => {
+        server.logger.info('Door has been retreived.')
         res.status(200).json({ status: 200, data: door, message: 'Retreived door!' })
       }).catch(err => {
         res.status(500).json({ status: 500, message: err.message })
@@ -52,7 +56,7 @@ const updateDoor = (req, res) => {
       door['isOpened'] = 1
       Door.updateDoor(id, door)
         .then(updatedDoor => {
-          server.logger.info('Door has been closed.')
+          server.logger.info('Door has been opened.')
           res.status(200).json({ status: 200, data: updatedDoor, message: 'Opened door!' })
         }).catch(err => {
           res.status(500).json({ status: 500, message: err.message })
