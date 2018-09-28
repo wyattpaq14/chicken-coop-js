@@ -26,7 +26,7 @@ const app = http.createServer(server)
 // server.locals.config = config
 
 // setup server logging
-const serverLog = bunyan.createLogger({
+const logger = bunyan.createLogger({
     name: "chicken-coop-api",
     serializers: {
         err: bunyan.stdSerializers.err
@@ -39,9 +39,9 @@ const serverLog = bunyan.createLogger({
     }]
 })
 // access server log in req via: req.locals.serverLog
-server.locals.serverLog = serverLog
+server.locals.logger = logger
 // access server log anywhere via: import { serverLog } from 'server.js'
-export default { serverLog }
+export default { logger }
 
 // setup access logging
 server.use(bunyanExpressLogger({
@@ -61,7 +61,8 @@ const options = {
     "autoReconnect": true,
     "socketTimeoutMS": 30000,
     "connectTimeoutMS": 30000,
-    "keepAlive": 120
+    "keepAlive": 120,
+    "useNewUrlParser": true
 }
 const mongodbURI = "mongodb://localhost:27017/chicken-coop"
 // database setup
@@ -89,7 +90,7 @@ server.use(router(router))
 const port = 3000
 app.listen(port, error => {
     if (!error) {
-        serverLog.info(`Started Chicken Coop API Server in ${process.env.NODE_ENV} environment on port ${port}`)
+        logger.info(`Started Chicken Coop API Server in ${process.env.NODE_ENV} environment on port ${port}`)
         console.log(`Started Chicken Coop API Server in ${process.env.NODE_ENV} environment on port ${port}`)
     }
 })
