@@ -1,5 +1,8 @@
 import Door from '../models/door'
 import server from '../server.js'
+import gpio from 'rpi-gpio'
+
+const gpiop = gpio.promise
 
 const createDoor = (req, res) => {
   if (req.body) {
@@ -51,7 +54,7 @@ const updateDoor = (req, res) => {
     Object.keys(req.body).forEach(key => {
       door[key] = req.body[key]
     })
-    
+
     if (action == 'open') {
       door['isOpened'] = 1
       Door.updateDoor(id, door)
@@ -77,6 +80,25 @@ const updateDoor = (req, res) => {
     } else res.status(401).json({ status: 401, message: 'Door action is not defined!' })
 
   } else throw new Error('Error, please check for valid input')
+}
+
+
+const raiseDoor = () => {
+  gpiop.setup(7, gpio.DIR_HIGH)
+    .then(() => {
+      return gpiop.write(16, true)
+    }).catch((err) => {
+      server.logger.error(err.message)
+    })    
+}
+
+const lowerDoor = () => {
+  gpiop.setup(7, gpio.DIR_LOW)
+    .then(() => {
+      return gpiop.write(18, true)
+    }).catch((err) => {
+      server.logger.error(err.message)
+    })
 }
 
 
