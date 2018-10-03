@@ -64,14 +64,15 @@ const options = {
     "keepAlive": 120,
     "useNewUrlParser": true
 }
-const mongodbURI = "mongodb://localhost:27017/chicken-coop"
+
+const mongodbURI = process.env.DB_URI
 // database setup
 const db = mongoose.connection
 server.use((req, res, next) => {
     if (db.readyState !== 1) {
         db.openUri(mongodbURI, options)
         db.on('error', err => {
-            serverLog.error({ msg: err.message }, 'MongoDB connection error')
+            logger.error({ msg: err.message }, 'MongoDB connection error')
             throw new Error(`Unable to connect to database at ${mongodbURI}. Error: ${err.message}`)
         })
     }
