@@ -1,8 +1,6 @@
 import Door from '../models/door'
 import server from '../server.js'
-import gpio from 'rpi-gpio'
-
-const gpiop = gpio.promise
+import { gpio } from 'rpi-gpio'
 
 const createDoor = (req, res) => {
   if (req.body) {
@@ -60,6 +58,7 @@ const updateDoor = (req, res) => {
       Door.updateDoor(id, door)
         .then(updatedDoor => {
           server.logger.info('Door has been opened.')
+          raiseDoor()
           res.status(200).json({ status: 200, data: updatedDoor, message: 'Opened door!' })
         }).catch(err => {
           res.status(500).json({ status: 500, message: err.message })
@@ -72,6 +71,7 @@ const updateDoor = (req, res) => {
       Door.updateDoor(id, door)
         .then(updatedDoor => {
           server.logger.info('Door has been closed.')
+          lowerDoor()
           res.status(200).json({ status: 200, data: updatedDoor, message: 'Closed door!' })
         }).catch(err => {
           res.status(500).json({ status: 500, message: err.message })
@@ -82,23 +82,21 @@ const updateDoor = (req, res) => {
   } else throw new Error('Error, please check for valid input')
 }
 
+const stop = () => {
+  gpio.setup(16, gpio.DIR_LOW, egg)
+  gpio.setup(18, gpio.DIR_LOW, egg)
+}
 
 const raiseDoor = () => {
-  gpiop.setup(7, gpio.DIR_HIGH)
-    .then(() => {
-      return gpiop.write(16, true)
-    }).catch((err) => {
-      server.logger.error(err.message)
-    })    
+  gpio.setup(16, gpio.DIR_HIGH, egg)
+  gpio.setup(18, gpio.DIR_LOW, egg)
+  setTimeout(stop, 3000)
 }
 
 const lowerDoor = () => {
-  gpiop.setup(7, gpio.DIR_LOW)
-    .then(() => {
-      return gpiop.write(18, true)
-    }).catch((err) => {
-      server.logger.error(err.message)
-    })
+  gpio.setup(16, gpio.DIR_LOW, egg);
+    gpio.setup(18, gpio.DIR_HIGH, egg);
+    setTimeout(stop, 3000)
 }
 
 
