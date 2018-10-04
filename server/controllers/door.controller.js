@@ -54,7 +54,7 @@ const updateDoor = (req, res) => {
     })
 
     if (action == 'open') {
-      if (door['isOpened'] == 0) {
+      if (door['isOpened'] == 1) {
         door['isOpened'] = 1
         Door.updateDoor(id, door)
           .then(updatedDoor => {
