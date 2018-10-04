@@ -56,27 +56,20 @@ const updateDoor = (req, res) => {
     })
 
     if (action == 'open') {
-      console.log('Action', action)
-      console.log('Door', door)
-      console.log('IsOpened', door['isOpened'])
-      if (door['isOpened'] == false) {
-        door['isOpened'] = true
-        Door.updateDoor(id, door)
-          .then(updatedDoor => {
-            server.logger.info('Door has been opened.')
-            raiseDoor()
-            res.status(200).json({ status: 200, data: updatedDoor, message: 'Opened door!' })
-          }).catch(err => {
-            res.status(500).json({ status: 500, message: err.message })
-            server.logger.error(err.message)
-          })
-      } else res.status(401).json({ status: 401, message: 'Door is already open!' })
-
+      door['isOpened'] = true
+      Door.updateDoor(id, door)
+        .then(updatedDoor => {
+          server.logger.info('Door has been opened.')
+          raiseDoor()
+          res.status(200).json({ status: 200, data: updatedDoor, message: 'Opened door!' })
+        }).catch(err => {
+          res.status(500).json({ status: 500, message: err.message })
+          server.logger.error(err.message)
+        })
     }
     else if (action == 'close') {
-      if (door['isOpened'] == true) {
-        door['isOpened'] = false
-        Door.updateDoor(id, door)
+      door['isOpened'] = false
+      Door.updateDoor(id, door)
         .then(updatedDoor => {
           server.logger.info('Door has been closed.')
           lowerDoor()
@@ -85,8 +78,6 @@ const updateDoor = (req, res) => {
           res.status(500).json({ status: 500, message: err.message })
           server.logger.error(err.message)
         })
-      } else res.status(401).json({ status: 401, message: 'Door is already closed!' })
-      
     } else res.status(401).json({ status: 401, message: 'Door action is not defined!' })
 
   } else throw new Error('Error, please check for valid input')
