@@ -48,14 +48,17 @@ const updateDoor = (req, res) => {
     // Retreive request data required for door operation
     const { id } = req.body
     const { action } = req.body
+    console.log('Action', action)
+    console.log('Door', door)
 
     Object.keys(req.body).forEach(key => {
       door[key] = req.body[key]
     })
-
+    console.log('Door', door)
+    console.log('Request', req.body)
     if (action == 'open') {
-      if (door['isOpened'] == 1) {
-        door['isOpened'] = 1
+      if (door['isOpened'] == false) {
+        door['isOpened'] = true
         Door.updateDoor(id, door)
           .then(updatedDoor => {
             server.logger.info('Door has been opened.')
@@ -69,8 +72,8 @@ const updateDoor = (req, res) => {
 
     }
     else if (action == 'close') {
-      if (door['isOpened'] == 0) {
-        door['isOpened'] = 0
+      if (door['isOpened'] == true) {
+        door['isOpened'] = false
         Door.updateDoor(id, door)
         .then(updatedDoor => {
           server.logger.info('Door has been closed.')
