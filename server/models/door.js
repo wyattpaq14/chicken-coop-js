@@ -16,7 +16,7 @@ DoorSchema.statics.addDoor = (door) => {
 
 DoorSchema.statics.updateDoor = (_id, door) => {
   return new Promise((resolve, reject) => {
-    Door.findByIdAndUpdate(_id, { $set: door }, { new: true }, (err, item) => {
+    Door.findOneAndUpdate(_id, { $set: door }, { new: true }, (err, item) => {
       if (err) reject(err)
       else resolve(item)
     })
