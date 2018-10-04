@@ -49,14 +49,16 @@ const updateDoor = (req, res) => {
     const { id } = req.body
     const { action } = req.body
     console.log('Action', action)
-    console.log('Door', door)
+
 
     Object.keys(req.body).forEach(key => {
       door[key] = req.body[key]
     })
-    console.log('Door', door)
-    console.log('Request', req.body)
+
     if (action == 'open') {
+      console.log('Action', action)
+      console.log('Door', door)
+      console.log('IsOpened', door['isOpened'])
       if (door['isOpened'] == false) {
         door['isOpened'] = true
         Door.updateDoor(id, door)
