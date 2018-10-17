@@ -14,7 +14,7 @@ import "vue-resource";
 export default {
   name: "Door-Control",
   props: {
-    // msg: String
+    msg: String
   },
   methods: {
     async openDoor() {
