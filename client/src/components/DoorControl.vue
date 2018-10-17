@@ -1,7 +1,18 @@
-<template>
+<template> 
   <div>
-    <button type="button" v-on:click="openDoor()" class="btn btn-primary btn-lg btn-block">Open Door</button>
-    <button type="button" v-on:click="closeDoor()" class="btn btn-primary btn-lg btn-block">Close Door</button>
+    <div class="row">
+      <h1>Door Control</h1>
+    </div>
+    <div class="row">
+      <h3>Current Door Status: </h3>
+    </div>
+    <div class="row">
+      &nbsp;
+    </div>
+    <div class="row">
+      <button type="button" v-on:click="openDoor()" class="btn btn-primary btn-lg btn-block">Open Door</button>
+      <button type="button" v-on:click="closeDoor()" class="btn btn-primary btn-lg btn-block">Close Door</button>
+    </div>
   </div>
 </template>
 
@@ -39,8 +50,13 @@ export default {
         alert(`Door Response: ${res.message}`)
       }
     }
+  },
+  data: function () {
+    return {
+      count: 0
+    }
   }
-};
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
