@@ -89,13 +89,13 @@ const stop = () => {
 const raiseDoor = () => {
   gpio.setup(16, gpio.DIR_HIGH)
   gpio.setup(18, gpio.DIR_LOW)
-  setTimeout(stop, 3000)
+  setTimeout(stop, 12000)
 }
 
 const lowerDoor = () => {
   gpio.setup(16, gpio.DIR_LOW)
   gpio.setup(18, gpio.DIR_HIGH)
-  setTimeout(stop, 3000)
+  setTimeout(stop, 12000)
 }
 
 
