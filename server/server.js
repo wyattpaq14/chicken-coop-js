@@ -66,7 +66,6 @@ const options = {
 }
 
 const mongodbURI = process.env.DB_URI
-// const mongodbURI = "mongodb://localhost:27017/chicken-coop"
 
 // database setup
 const db = mongoose.connection
