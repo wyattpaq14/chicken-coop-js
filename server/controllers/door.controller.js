@@ -57,7 +57,7 @@ const updateDoor = (req, res) => {
       door['isOpened'] = true
       Door.updateDoor(id, door)
         .then(updatedDoor => {
-          raiseDoor()
+          raiseDoor(7000)
           server.logger.info('Door has been opened.')
           res.status(200).json({ status: 200, data: updatedDoor, message: 'Opened door!' })
         }).catch(err => {
@@ -69,7 +69,7 @@ const updateDoor = (req, res) => {
       door['isOpened'] = false
       Door.updateDoor(id, door)
         .then(updatedDoor => {
-          lowerDoor()
+          lowerDoor(5000)
           server.logger.info('Door has been closed.')
           res.status(200).json({ status: 200, data: updatedDoor, message: 'Closed door!' })
         }).catch(err => {
@@ -86,16 +86,16 @@ const stop = () => {
   gpio.setup(18, gpio.DIR_LOW)
 }
 
-const raiseDoor = () => {
+const raiseDoor = (val) => {
   gpio.setup(16, gpio.DIR_HIGH)
   gpio.setup(18, gpio.DIR_LOW)
-  setTimeout(stop, 8000)
+  setTimeout(stop, val)
 }
 
-const lowerDoor = () => {
+const lowerDoor = (val) => {
   gpio.setup(16, gpio.DIR_LOW)
   gpio.setup(18, gpio.DIR_HIGH)
-  setTimeout(stop, 5000)
+  setTimeout(stop, val)
 }
 
 

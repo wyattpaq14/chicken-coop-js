@@ -51,9 +51,13 @@ export default {
       }
     }
   },
+  beforeMount() {
+    this.doorStatus = this.$http.get("http://chicken-coop01:3000/door/5bb55214881cfd14695ea2eb")
+  },
   data: function () {
     return {
-      count: 0
+      doorStatus: false,
+
     }
   }
 }
