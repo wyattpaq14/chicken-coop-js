@@ -30,7 +30,7 @@ export default {
   methods: {
     async openDoor() {
       // let res = await this.$http.post(`${this.$config.backend}/api/auth/login`, {
-      let res = await this.$http.put("http://chicken-coop01:3000/door", {
+      let res = await this.$http.put("http://192.168.1.242:3000/door", {
           action: "open",
           id: "5bb55214881cfd14695ea2eb"
         })
@@ -41,7 +41,7 @@ export default {
     },
     async closeDoor() {
       // let res = await this.$http.post(`${this.$config.backend}/api/auth/login`, {
-      let res = await this.$http.put("http://chicken-coop01:3000/door", {
+      let res = await this.$http.put("http://192.168.1.242:3000/door", {
           action: "close",
           id: "5bb55214881cfd14695ea2eb"
         })
