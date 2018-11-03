@@ -4,7 +4,7 @@
       <h1>Door Control</h1>
     </div>
     <div class="row">
-      <h3>Current Door Status: </h3>
+      <h3 v-bind:class="{ active: isActive, 'text-danger': hasError }">Current Door Status: {{doorStatus}}</h3>
     </div>
     <div class="row">
       &nbsp;
@@ -52,12 +52,21 @@ export default {
     }
   },
   beforeMount() {
-    this.doorStatus = this.$http.get("http://chicken-coop01:3000/door/5bb55214881cfd14695ea2eb")
+    let res = this.$http.get("http://192.168.1.242:3000/door/5bb55214881cfd14695ea2eb")
+    .then((res) => {
+      const { isOpened } = res.body.data
+      if (isOpened === true) {
+        this.doorStatus = 'Open'
+
+      } else {
+         this.doorStatus = 'Closed'
+      }
+      console.log(res.body.data)
+    })
   },
   data: function () {
     return {
-      doorStatus: false,
-
+      doorStatus: ''
     }
   }
 }
