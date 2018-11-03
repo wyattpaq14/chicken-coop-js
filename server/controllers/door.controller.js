@@ -69,7 +69,7 @@ const updateDoor = (req, res) => {
       door['isOpened'] = false
       Door.updateDoor(id, door)
         .then(updatedDoor => {
-          lowerDoor(5000)
+          lowerDoor(6250)
           server.logger.info('Door has been closed.')
           res.status(200).json({ status: 200, data: updatedDoor, message: 'Closed door!' })
         }).catch(err => {

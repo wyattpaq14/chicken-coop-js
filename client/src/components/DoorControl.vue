@@ -52,7 +52,7 @@ export default {
     }
   },
   beforeMount() {
-    this.doorStatus = this.$http.get("http://chicken-coop01:3000/door/5bb55214881cfd14695ea2eb")
+    this.doorStatus = this.$http.get("http://192.168.1.242:3000/door/5bb55214881cfd14695ea2eb")
   },
   data: function () {
     return {
