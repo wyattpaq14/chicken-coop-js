@@ -63,6 +63,8 @@ export default {
       }
       console.log(res.body.data)
     })
+    
+    this.doorStatus = this.$http.get("http://192.168.1.242:3000/door/5bb55214881cfd14695ea2eb")
   },
   data: function () {
     return {
