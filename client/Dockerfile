@@ -18,4 +18,4 @@ COPY . .
 # Expose ports
 EXPOSE 8080
 
-CMD [ "npm", "serve" ]
+CMD [ "vue-cli-service", "serve" ]
