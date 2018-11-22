@@ -4,7 +4,7 @@
       <h1>Door Control</h1>
     </div>
     <div class="row">
-      <h3 v-bind:class="{ active: isActive, 'text-danger': hasError }">Current Door Status: {{doorStatus}}</h3>
+      <h3>Current Door Status: {{doorStatus}}</h3>
     </div>
     <div class="row">
       &nbsp;
@@ -18,57 +18,74 @@
 
 <script>
 // Import bootstrap files
-import "bootstrap/dist/css/bootstrap.css";
-import "bootstrap-vue/dist/bootstrap-vue.css";
-import "vue-resource";
+import "bootstrap/dist/css/bootstrap.css"
+import "bootstrap-vue/dist/bootstrap-vue.css"
+import "vue-resource"
 
 export default {
+  // v-bind:class="{ active: isActive, 'text-danger': hasError }"
   name: "Door-Control",
   props: {
     msg: String
   },
   methods: {
+    async updateDoorStatus() {
+      let res = this.$http
+        .get("http://192.168.1.242:3000/door/5bb55214881cfd14695ea2eb")
+        .then(res => {
+          const { isOpened } = res.body.data
+          if (isOpened === true) {
+            this.doorStatus = "Open"
+          } else {
+            this.doorStatus = "Closed"
+          }
+          console.log(res.body.data)
+        })
+    },
     async openDoor() {
       // let res = await this.$http.post(`${this.$config.backend}/api/auth/login`, {
-      let res = await this.$http.put("http://192.168.1.242:3000/door", {
+      let res = await this.$http
+        .put("http://192.168.1.242:3000/door", {
           action: "open",
           id: "5bb55214881cfd14695ea2eb"
         })
-        .then(res => res.data);
+        .then(res => res.data)
       if (res) {
         alert(`Door Response: ${res.message}`)
+        
+        updateDoorStatus()
       }
     },
     async closeDoor() {
       // let res = await this.$http.post(`${this.$config.backend}/api/auth/login`, {
-      let res = await this.$http.put("http://192.168.1.242:3000/door", {
+      let res = await this.$http
+        .put("http://192.168.1.242:3000/door", {
           action: "close",
           id: "5bb55214881cfd14695ea2eb"
         })
-        .then(res => res.data);
+        .then(res => res.data)
       if (res) {
         alert(`Door Response: ${res.message}`)
+        updateDoorStatus()
       }
     }
   },
   beforeMount() {
-    let res = this.$http.get("http://192.168.1.242:3000/door/5bb55214881cfd14695ea2eb")
-    .then((res) => {
-      const { isOpened } = res.body.data
-      if (isOpened === true) {
-        this.doorStatus = 'Open'
-
-      } else {
-         this.doorStatus = 'Closed'
-      }
-      console.log(res.body.data)
-    })
-    
-    this.doorStatus = this.$http.get("http://192.168.1.242:3000/door/5bb55214881cfd14695ea2eb")
+    let res = this.$http
+      .get("http://192.168.1.242:3000/door/5bb55214881cfd14695ea2eb")
+      .then(res => {
+        const { isOpened } = res.body.data
+        if (isOpened === true) {
+          this.doorStatus = "Open"
+        } else {
+          this.doorStatus = "Closed"
+        }
+        console.log(res.body.data)
+      })
   },
-  data: function () {
+  data: function() {
     return {
-      doorStatus: ''
+      doorStatus: ""
     }
   }
 }
