@@ -1,0 +1,35 @@
+version: '3.3'
+
+services:
+# pi/chicken-coop-server
+  chicken-coop-server:
+    build: ./server
+    image: "pi/chicken-coop-server:latest"
+    hostname: chicken-coop-server
+    container_name: chicken-coop-server
+    ports:
+      - "3000:3000"
+    environment:
+       DB_URI: ${DB_URI}
+    networks:
+      chicken-coop-nw:
+        ipv4_address: 172.16.1.40
+
+# pi/chicken-coop-client
+  chicken-coop-client:
+    build: ./client
+    image: "pi/chicken-coop-client:latest"
+    hostname: chicken-coop-client
+    container_name: chicken-coop-client
+    ports:
+      - "80:8080"
+    links:
+      - "chicken-coop-server"
+    networks:
+      chicken-coop-nw:
+        ipv4_address: 172.16.1.30
+
+networks:
+   chicken-coop-nw:
+      external: true
+
