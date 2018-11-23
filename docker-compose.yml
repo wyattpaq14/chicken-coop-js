@@ -29,6 +29,23 @@ services:
       chicken-coop-nw:
         ipv4_address: 172.16.1.30
 
+# andresvidal/rpi3-mongodb3
+  rpi3-mongodb3:
+    image: "andresvidal/rpi3-mongodb3:latest"
+    hostname: rpi3-mongodb3
+    container_name: rpi3-mongodb3
+    ports:
+      - "27017:27017"
+      - "28017:28017"
+    volumes:
+      - /data/db:/data/db
+      - /data/configdb:/data/configdb
+    links:
+      - "chicken-coop-server"
+    networks:
+      chicken-coop-nw:
+        ipv4_address: 172.16.1.30
+
 networks:
    chicken-coop-nw:
       external: true
