@@ -44,7 +44,7 @@ services:
       - "chicken-coop-server"
     networks:
       chicken-coop-nw:
-        ipv4_address: 172.16.1.30
+        ipv4_address: 172.16.1.20
 
 networks:
    chicken-coop-nw:
