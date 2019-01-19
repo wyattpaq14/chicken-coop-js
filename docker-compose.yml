@@ -3,6 +3,7 @@ version: '3.3'
 services:
 # pi/chicken-coop-server
   chicken-coop-server:
+    privileged: true
     build: ./server
     image: "pi/chicken-coop-server:latest"
     hostname: chicken-coop-server
