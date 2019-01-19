@@ -49,4 +49,3 @@ services:
 networks:
    chicken-coop-nw:
       external: true
-
