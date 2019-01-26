@@ -8,6 +8,7 @@ services:
     image: "pi/chicken-coop-server:latest"
     hostname: chicken-coop-server
     container_name: chicken-coop-server
+    restart: always
     ports:
       - "3000:3000"
     environment:
@@ -22,6 +23,7 @@ services:
     image: "pi/chicken-coop-client:latest"
     hostname: chicken-coop-client
     container_name: chicken-coop-client
+    restart: always
     ports:
       - "80:8080"
     links:
