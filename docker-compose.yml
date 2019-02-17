@@ -37,6 +37,7 @@ services:
     image: "andresvidal/rpi3-mongodb3:latest"
     hostname: rpi3-mongodb3
     container_name: rpi3-mongodb3
+    restart: always
     ports:
       - "27017:27017"
       - "28017:28017"
