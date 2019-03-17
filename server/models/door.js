@@ -41,8 +41,5 @@ DoorSchema.statics.getDoorById = (_id) => {
   })
 }
 
-
-
-
 const Door = mongoose.model('Door', DoorSchema)
 export default Door

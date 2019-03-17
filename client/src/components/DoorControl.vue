@@ -23,7 +23,6 @@ import "bootstrap-vue/dist/bootstrap-vue.css"
 import "vue-resource"
 
 export default {
-  // v-bind:class="{ active: isActive, 'text-danger': hasError }"
   name: "Door-Control",
   props: {
     msg: String
@@ -31,7 +30,7 @@ export default {
   methods: {
     async updateDoorStatus() {
       let res = this.$http
-        .get("http://192.168.1.242:3000/door/5bb55214881cfd14695ea2eb")
+        .get("http://localhost:3000/door/5bb55214881cfd14695ea2eb")
         .then(res => {
           const { isOpened } = res.body.data
           if (isOpened === true) {
@@ -43,36 +42,33 @@ export default {
         })
     },
     async openDoor() {
-      // let res = await this.$http.post(`${this.$config.backend}/api/auth/login`, {
       let res = await this.$http
-        .put("http://192.168.1.242:3000/door", {
+        .put("http://localhost:3000/door", {
           action: "open",
           id: "5bb55214881cfd14695ea2eb"
         })
         .then(res => res.data)
       if (res) {
         alert(`Door Response: ${res.message}`)
-        
-        updateDoorStatus()
       }
+      updateDoorStatus()
     },
     async closeDoor() {
-      // let res = await this.$http.post(`${this.$config.backend}/api/auth/login`, {
       let res = await this.$http
-        .put("http://192.168.1.242:3000/door", {
+        .put("http://localhost:3000/door", {
           action: "close",
           id: "5bb55214881cfd14695ea2eb"
         })
         .then(res => res.data)
       if (res) {
         alert(`Door Response: ${res.message}`)
-        updateDoorStatus()
       }
+      updateDoorStatus()
     }
   },
   beforeMount() {
     let res = this.$http
-      .get("http://192.168.1.242:3000/door/5bb55214881cfd14695ea2eb")
+      .get("http://localhost:3000/door/5c8ddbce01230d098ad49e19")
       .then(res => {
         const { isOpened } = res.body.data
         if (isOpened === true) {
@@ -80,7 +76,6 @@ export default {
         } else {
           this.doorStatus = "Closed"
         }
-        console.log(res.body.data)
       })
   },
   data: function() {
