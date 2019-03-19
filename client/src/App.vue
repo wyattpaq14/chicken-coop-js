@@ -60,7 +60,13 @@
 
 <script>
 export default {
-  name: "jac2-client"
+  name: "chicken-coop",
+  data() {
+    return {
+      authenticated: false,
+      user: null
+    }
+  }
 };
 </script>
 

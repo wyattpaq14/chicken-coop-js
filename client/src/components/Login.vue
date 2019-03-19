@@ -92,8 +92,10 @@ export default {
             Object.keys(this.form).forEach(key => {
               this.form[key] = null
             })
+            this.$emit("authenticated", true)
+            this.$emit("user", res.user)
+            this.$router.replace({ name: "door-control" })
             console.log({ user: res.user })
-            // ipcRenderer.send("successfulLogin", { user: res.user })
           } else {
             this.$notify(res.message, "error")
           }

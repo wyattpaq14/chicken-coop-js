@@ -12,22 +12,22 @@ export default new Router({
     },
     {
       path: '/door',
-      name: 'landing-page',
+      name: 'door-control',
       component: require('@/components/DoorControl').default
     },
     {
       path: '/cam',
-      name: 'landing-page',
+      name: 'camera',
       component: require('@/components/DoorControl').default
     },
     {
       path: '/login',
-      name: 'landing-page',
+      name: 'login',
       component: require('@/components/Login').default
     },
     {
       path: '/logout',
-      name: 'landing-page',
+      name: 'logout',
       component: require('@/components/DoorControl').default
     }
   ]
