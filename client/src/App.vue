@@ -1,27 +1,52 @@
 
 <template>
-<div id="app">
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="#">Chicken Coop</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor02" aria-controls="navbarColor02" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
+  <div id="app">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <router-link tag="li" to="/">
+        <a class="navbar-brand">Chicken Coop</a>
+      </router-link>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarColor02"
+        aria-controls="navbarColor02"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-  <div class="collapse navbar-collapse" id="navbarColor02">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Door Control <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Camera</a>
-      </li>
-    </ul>
-  </div>
-</nav>
+      <div class="collapse navbar-collapse" id="navbarColor02">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <router-link tag="li" to="/login">
+              <a class="nav-link">Login</a>
+            </router-link>
+          </li>
+          <li class="nav-item active">
+            <router-link tag="li" to="/logout">
+              <a class="nav-link">Logout</a>
+            </router-link>
+          </li>
+          <li class="nav-item active">
+            <router-link tag="li" to="/door">
+              <a class="nav-link">Door Control</a>
+            </router-link>
+          </li>
+
+          <li class="nav-item">
+            <router-link tag="li" to="/camera">
+              <a class="nav-link">Camera</a>
+            </router-link>
+          </li>
+        </ul>
+      </div>
+    </nav>
     <div class="container">
-    <router-view/>
+      <router-view/>
     </div>
-</div>
+  </div>
 </template>
 
 
