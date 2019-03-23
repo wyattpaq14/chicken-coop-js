@@ -28,7 +28,7 @@ export default new Router({
     {
       path: '/logout',
       name: 'logout',
-      component: require('@/components/DoorControl').default
+      component: require('@/components/Logout').default
     }
   ]
 })

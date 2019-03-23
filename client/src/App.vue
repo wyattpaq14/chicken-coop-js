@@ -2,7 +2,7 @@
 <template>
   <div id="app">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <router-link tag="li" to="/">
+      <router-link to="/">
         <a class="navbar-brand">Chicken Coop</a>
       </router-link>
       <button
@@ -19,12 +19,12 @@
 
       <div class="collapse navbar-collapse" id="navbarColor02">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <router-link tag="li" to="/login">
+          <li class="nav-item active" v-if="!isLoggedin()">
+            <router-link tag="li" to="/login" >
               <a class="nav-link">Login</a>
             </router-link>
           </li>
-          <li class="nav-item active">
+          <li class="nav-item active" v-if="isLoggedin()">
             <router-link tag="li" to="/logout">
               <a class="nav-link">Logout</a>
             </router-link>
@@ -50,14 +50,6 @@
 </template>
 
 
-
-
-
-
-
-
-
-
 <script>
 export default {
   name: "chicken-coop",
@@ -66,7 +58,18 @@ export default {
       authenticated: false,
       user: null
     }
+  },
+  methods: {
+    isLoggedin () {
+      if (localStorage.token) {
+        return true
+      }
+      else {
+        return false
+      }
+    }
   }
+  
 };
 </script>
 

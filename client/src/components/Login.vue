@@ -63,10 +63,25 @@
 // import { ipcRenderer } from "electron"
 export default {
   props: ["currentView"],
+
+  data() {
+    return {
+      form: {
+        usernameEmail: null,
+        password: null
+      },
+      errors: {
+        usernameEmail: null,
+        password: null
+      }
+    }
+  },
+  
   methods: {
     changeView(panel) {
       this.$emit("panel-switch", panel)
     },
+
     checkInput() {
       const { form, errors } = this
       if (!form.usernameEmail) {
@@ -87,17 +102,15 @@ export default {
             })
             .then(res => res.data)
           if (res.status === 200) {
-            // SWING TO MAIN WINDOW PASSING res.user
-            this.$notify(res.message, "success")
-            Object.keys(this.form).forEach(key => {
-              this.form[key] = null
-            })
-            this.$emit("authenticated", true)
-            this.$emit("user", res.user)
+            // Successful login, storing token and redirecting to door-control
+            localStorage.token = res.token
             this.$router.replace({ name: "door-control" })
-            console.log({ user: res.user })
+            this.$notify(res.message, "success")
+
           } else {
+            // Login error, delete token
             this.$notify(res.message, "error")
+            delete localStorage.token
           }
         }
       } catch (err) {
@@ -105,18 +118,7 @@ export default {
       }
     }
   },
-  data() {
-    return {
-      form: {
-        usernameEmail: null,
-        password: null
-      },
-      errors: {
-        usernameEmail: null,
-        password: null
-      }
-    }
-  }
+  
 }
 </script>
 

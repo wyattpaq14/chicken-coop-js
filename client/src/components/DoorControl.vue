@@ -27,10 +27,21 @@ export default {
   props: {
     msg: String
   },
+  updated() { this.isLoggedin() },
+  created() { this.isLoggedin() },
   methods: {
+    isLoggedin () {
+      if (localStorage.token) {
+        return true
+      }
+      else {
+        this.$notify('You are not logged in!', "error")
+        this.$router.replace({ name: "login" })
+      }
+    },
     async updateDoorStatus() {
       let res = this.$http
-        .get("http://localhost:3000/door/5bb55214881cfd14695ea2eb")
+        .get("http://localhost:3000/door/5bb55214881cfd14695ea2eb",)
         .then(res => {
           const { isOpened } = res.body.data
           if (isOpened === true) {
