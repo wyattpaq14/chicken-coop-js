@@ -2,8 +2,8 @@
 <template>
   <div id="app">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <router-link to="/">
-        <a class="navbar-brand">Chicken Coop</a>
+      <router-link class="navbar-brand" to="/">
+        Chicken Coop
       </router-link>
       <button
         class="navbar-toggler"

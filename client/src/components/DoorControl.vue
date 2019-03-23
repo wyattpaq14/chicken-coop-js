@@ -41,7 +41,7 @@ export default {
     },
     async updateDoorStatus() {
       let res = this.$http
-        .get("http://localhost:3000/door/5bb55214881cfd14695ea2eb",)
+        .get("http://192.168.1.242:3000/door/5bb55214881cfd14695ea2eb",)
         .then(res => {
           const { isOpened } = res.body.data
           if (isOpened === true) {
@@ -54,7 +54,7 @@ export default {
     },
     async openDoor() {
       let res = await this.$http
-        .put("http://localhost:3000/door", {
+        .put("http://192.168.1.242:3000/door", {
           action: "open",
           id: "5bb55214881cfd14695ea2eb"
         })
@@ -66,7 +66,7 @@ export default {
     },
     async closeDoor() {
       let res = await this.$http
-        .put("http://localhost:3000/door", {
+        .put("http://192.168.1.242:3000/door", {
           action: "close",
           id: "5bb55214881cfd14695ea2eb"
         })
@@ -79,7 +79,7 @@ export default {
   },
   beforeMount() {
     let res = this.$http
-      .get("http://localhost:3000/door/5c8ddbce01230d098ad49e19")
+      .get("http://192.168.1.242:3000/door/5bb55214881cfd14695ea2eb")
       .then(res => {
         const { isOpened } = res.body.data
         if (isOpened === true) {
