@@ -13,6 +13,7 @@ services:
       - "3000:3000"
     environment:
        DB_URI: ${DB_URI}
+       TOKEN_SECRET: ${TOKEN_SECRET}
     networks:
       chicken-coop-nw:
         ipv4_address: 172.16.1.40
